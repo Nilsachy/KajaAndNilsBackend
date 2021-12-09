@@ -1,6 +1,7 @@
 package KajaNilsWebsite.controllers;
 
 import KajaNilsWebsite.entities.Movie;
+import KajaNilsWebsite.entities.Place;
 import KajaNilsWebsite.entities.Todo;
 import KajaNilsWebsite.services.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +97,47 @@ public class Controller {
         try {
             service.deleteMovie(id);
             String message = "Successfully deleted movie";
+            return ResponseEntity.ok().body(new ResponseMessage(message));
+        } catch (Exception e) {
+            return getResponse(e);
+        }
+    }
+
+    @GetMapping("/places")
+    @ResponseBody
+    public List<Place> getAllPlaces() {
+        return service.getAllPlaces();
+    }
+
+    @PostMapping("/places/create")
+    public ResponseEntity<ResponseMessage> addPlace(@RequestParam("name") String name, @RequestParam("visited") Boolean visited) {
+        try {
+            service.addPlace(name, visited);
+            String message = "Successfully added place: " + name;
+            return ResponseEntity.ok().body(new ResponseMessage(message));
+        } catch (Exception e) {
+            return getResponse(e);
+        }
+    }
+
+    @PutMapping("/places/edit_place")
+    public ResponseEntity<ResponseMessage> editPlace(@RequestParam("name") String name,
+                                                     @RequestParam("visited") Boolean visited,
+                                                     @RequestParam("id") Integer id) {
+        try {
+            service.editPlace(id, name, visited);
+            String message = "Successfully edited place: " + name;
+            return ResponseEntity.ok().body(new ResponseMessage(message));
+        } catch (Exception e) {
+            return getResponse(e);
+        }
+    }
+
+    @DeleteMapping("/places/delete_place")
+    public ResponseEntity<ResponseMessage> deletePlace(@RequestParam("id") Integer id) {
+        try {
+            service.deletePlace(id);
+            String message = "Successfully deleted place";
             return ResponseEntity.ok().body(new ResponseMessage(message));
         } catch (Exception e) {
             return getResponse(e);

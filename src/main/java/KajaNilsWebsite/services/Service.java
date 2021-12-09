@@ -1,8 +1,10 @@
 package KajaNilsWebsite.services;
 
 import KajaNilsWebsite.entities.Movie;
+import KajaNilsWebsite.entities.Place;
 import KajaNilsWebsite.entities.Todo;
 import KajaNilsWebsite.repositories.MovieRepository;
+import KajaNilsWebsite.repositories.PlaceRepository;
 import KajaNilsWebsite.repositories.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,11 +16,13 @@ public class Service {
 
     private final TodoRepository todoRepository;
     private final MovieRepository movieRepository;
+    private final PlaceRepository placeRepository;
 
     @Autowired
-    public Service(TodoRepository todoRepository, MovieRepository movieRepository) {
+    public Service(TodoRepository todoRepository, MovieRepository movieRepository, PlaceRepository placeRepository) {
         this.todoRepository = todoRepository;
         this.movieRepository = movieRepository;
+        this.placeRepository = placeRepository;
     }
 
     public Todo getTodo(Integer id) {
@@ -73,5 +77,32 @@ public class Service {
         Movie movie = getMovie(id);
         movieRepository.delete(movie);
         return movie;
+    }
+
+    public Place getPlace(Integer id) {
+        return placeRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException(String.format("invalid movie id: %s", id)));
+    }
+
+    public List<Place> getAllPlaces() {
+        return placeRepository.findAll();
+    }
+
+    public Place addPlace(String name, Boolean visited) {
+        Place place = new Place(name, visited);
+        return placeRepository.save(place);
+    }
+
+    public Place editPlace(Integer id, String name, Boolean visited) {
+        Place place = getPlace(id);
+        place.setName(name);
+        place.setVisited(visited);
+        return placeRepository.save(place);
+    }
+
+    public Place deletePlace(Integer id) {
+        Place place = getPlace(id);
+        placeRepository.delete(place);
+        return place;
     }
 }
