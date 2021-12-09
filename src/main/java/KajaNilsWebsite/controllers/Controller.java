@@ -2,6 +2,7 @@ package KajaNilsWebsite.controllers;
 
 import KajaNilsWebsite.entities.Movie;
 import KajaNilsWebsite.entities.Place;
+import KajaNilsWebsite.entities.Restaurant;
 import KajaNilsWebsite.entities.Todo;
 import KajaNilsWebsite.services.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,6 +139,47 @@ public class Controller {
         try {
             service.deletePlace(id);
             String message = "Successfully deleted place";
+            return ResponseEntity.ok().body(new ResponseMessage(message));
+        } catch (Exception e) {
+            return getResponse(e);
+        }
+    }
+
+    @GetMapping("/restaurants")
+    @ResponseBody
+    public List<Restaurant> getAllRestaurants() {
+        return service.getAllRestaurants();
+    }
+
+    @PostMapping("/restaurants/create")
+    public ResponseEntity<ResponseMessage> addRestaurant(@RequestParam("name") String name, @RequestParam("visited") Boolean visited) {
+        try {
+            service.addRestaurant(name, visited);
+            String message = "Successfully added restaurant: " + name;
+            return ResponseEntity.ok().body(new ResponseMessage(message));
+        } catch (Exception e) {
+            return getResponse(e);
+        }
+    }
+
+    @PutMapping("/restaurants/edit_restaurant")
+    public ResponseEntity<ResponseMessage> editRestaurant(@RequestParam("name") String name,
+                                                     @RequestParam("visited") Boolean visited,
+                                                     @RequestParam("id") Integer id) {
+        try {
+            service.editRestaurant(id, name, visited);
+            String message = "Successfully edited restaurant: " + name;
+            return ResponseEntity.ok().body(new ResponseMessage(message));
+        } catch (Exception e) {
+            return getResponse(e);
+        }
+    }
+
+    @DeleteMapping("/restaurants/delete_restaurant")
+    public ResponseEntity<ResponseMessage> deleteRestaurant(@RequestParam("id") Integer id) {
+        try {
+            service.deleteRestaurant(id);
+            String message = "Successfully deleted restaurant";
             return ResponseEntity.ok().body(new ResponseMessage(message));
         } catch (Exception e) {
             return getResponse(e);

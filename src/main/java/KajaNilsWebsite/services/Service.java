@@ -2,9 +2,11 @@ package KajaNilsWebsite.services;
 
 import KajaNilsWebsite.entities.Movie;
 import KajaNilsWebsite.entities.Place;
+import KajaNilsWebsite.entities.Restaurant;
 import KajaNilsWebsite.entities.Todo;
 import KajaNilsWebsite.repositories.MovieRepository;
 import KajaNilsWebsite.repositories.PlaceRepository;
+import KajaNilsWebsite.repositories.RestaurantRepository;
 import KajaNilsWebsite.repositories.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,12 +19,14 @@ public class Service {
     private final TodoRepository todoRepository;
     private final MovieRepository movieRepository;
     private final PlaceRepository placeRepository;
+    private final RestaurantRepository restaurantRepository;
 
     @Autowired
-    public Service(TodoRepository todoRepository, MovieRepository movieRepository, PlaceRepository placeRepository) {
+    public Service(TodoRepository todoRepository, MovieRepository movieRepository, PlaceRepository placeRepository, RestaurantRepository restaurantRepository) {
         this.todoRepository = todoRepository;
         this.movieRepository = movieRepository;
         this.placeRepository = placeRepository;
+        this.restaurantRepository = restaurantRepository;
     }
 
     public Todo getTodo(Integer id) {
@@ -104,5 +108,32 @@ public class Service {
         Place place = getPlace(id);
         placeRepository.delete(place);
         return place;
+    }
+
+    public Restaurant getRestaurant(Integer id) {
+        return restaurantRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException(String.format("invalid restaurant id: %s", id)));
+    }
+
+    public List<Restaurant> getAllRestaurants() {
+        return restaurantRepository.findAll();
+    }
+
+    public Restaurant addRestaurant(String name, Boolean visited) {
+        Restaurant restaurant = new Restaurant(name, visited);
+        return restaurantRepository.save(restaurant);
+    }
+
+    public Restaurant editRestaurant(Integer id, String name, Boolean visited) {
+        Restaurant restaurant = getRestaurant(id);
+        restaurant.setName(name);
+        restaurant.setVisited(visited);
+        return restaurantRepository.save(restaurant);
+    }
+
+    public Restaurant deleteRestaurant(Integer id) {
+        Restaurant restaurant = getRestaurant(id);
+        restaurantRepository.delete(restaurant);
+        return restaurant;
     }
 }
