@@ -2,6 +2,11 @@ plugins {
 	id 'org.springframework.boot' version '2.6.1'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'com.palantir.docker' version '0.22.1'
+}
+
+bootJar {
+	archiveName 'backend.jar'
 }
 
 group = 'KajaNilsWebsite'
@@ -24,4 +29,12 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+docker {
+	dependsOn bootJar
+	name "kaja-nils-backend"
+	dockerfile file ('./Dockerfile')
+	files bootJar.archivePath
+	buildArgs (['JAR_FILE': "app.jar"])
 }

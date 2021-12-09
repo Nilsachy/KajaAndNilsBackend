@@ -1,6 +1,8 @@
 package KajaNilsWebsite.services;
 
+import KajaNilsWebsite.entities.Movie;
 import KajaNilsWebsite.entities.Todo;
+import KajaNilsWebsite.repositories.MovieRepository;
 import KajaNilsWebsite.repositories.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,15 +13,17 @@ import java.util.List;
 public class Service {
 
     private final TodoRepository todoRepository;
+    private final MovieRepository movieRepository;
 
     @Autowired
-    public Service(TodoRepository todoRepository) {
+    public Service(TodoRepository todoRepository, MovieRepository movieRepository) {
         this.todoRepository = todoRepository;
+        this.movieRepository = movieRepository;
     }
 
     public Todo getTodo(Integer id) {
         return todoRepository.findById(id).orElseThrow(() ->
-                new EntityNotFoundException(String.format("invalid event type id: %s", id)));
+                new EntityNotFoundException(String.format("invalid todo id: %s", id)));
     }
 
     public List<Todo> getAllTodos() {
@@ -36,5 +40,38 @@ public class Service {
         todo.setTitle(title);
         todo.setDone(done);
         return todoRepository.save(todo);
+    }
+
+    public Todo deleteTodo(Integer id) {
+        Todo todo = getTodo(id);
+        todoRepository.delete(todo);
+        return todo;
+    }
+
+    public Movie getMovie(Integer id) {
+        return movieRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException(String.format("invalid movie id: %s", id)));
+    }
+
+    public List<Movie> getAllMovies() {
+        return movieRepository.findAll();
+    }
+
+    public Movie addMovie(String title, Boolean watched) {
+        Movie movie = new Movie(title, watched);
+        return movieRepository.save(movie);
+    }
+
+    public Movie editMovie(Integer id, String title, Boolean watched) {
+        Movie movie = getMovie(id);
+        movie.setTitle(title);
+        movie.setWatched(watched);
+        return movieRepository.save(movie);
+    }
+
+    public Movie deleteMovie(Integer id) {
+        Movie movie = getMovie(id);
+        movieRepository.delete(movie);
+        return movie;
     }
 }
