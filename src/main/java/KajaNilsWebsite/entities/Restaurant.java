@@ -13,13 +13,15 @@ public class Restaurant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
+    private String city;
     private Boolean visited;
 
     public Restaurant() {
     }
 
-    public Restaurant(String name, Boolean visited) {
+    public Restaurant(String name, String city, Boolean visited) {
         this.name = name;
+        this.city = city;
         this.visited = visited;
     }
 
@@ -39,6 +41,11 @@ public class Restaurant {
         this.name = name;
     }
 
+    public String getCity() { return city; }
+
+    public void setCity(String city) { this.city = city; }
+
+
     public Boolean getVisited() {
         return visited;
     }
@@ -52,11 +59,11 @@ public class Restaurant {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Restaurant that = (Restaurant) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(visited, that.visited);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(city, that.city) && Objects.equals(visited, that.visited);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, visited);
+        return Objects.hash(id, name, city, visited);
     }
 }

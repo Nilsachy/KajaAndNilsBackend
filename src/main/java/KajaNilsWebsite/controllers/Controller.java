@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import responses.ResponseMessage;
 
 import java.util.List;
-@RequestMapping(name = "/backend-kn")
+@RequestMapping(value = "/backend-kn")
 @org.springframework.stereotype.Controller
 public class Controller {
 
@@ -152,9 +152,9 @@ public class Controller {
     }
 
     @PostMapping("/restaurants/create")
-    public ResponseEntity<ResponseMessage> addRestaurant(@RequestParam("name") String name, @RequestParam("visited") Boolean visited) {
+    public ResponseEntity<ResponseMessage> addRestaurant(@RequestParam("name") String name, @RequestParam("city") String city, @RequestParam("visited") Boolean visited) {
         try {
-            service.addRestaurant(name, visited);
+            service.addRestaurant(name, city, visited);
             String message = "Successfully added restaurant: " + name;
             return ResponseEntity.ok().body(new ResponseMessage(message));
         } catch (Exception e) {
@@ -164,10 +164,11 @@ public class Controller {
 
     @PutMapping("/restaurants/edit_restaurant")
     public ResponseEntity<ResponseMessage> editRestaurant(@RequestParam("name") String name,
+                                                     @RequestParam("city") String city,
                                                      @RequestParam("visited") Boolean visited,
                                                      @RequestParam("id") Integer id) {
         try {
-            service.editRestaurant(id, name, visited);
+            service.editRestaurant(id, name, city, visited);
             String message = "Successfully edited restaurant: " + name;
             return ResponseEntity.ok().body(new ResponseMessage(message));
         } catch (Exception e) {

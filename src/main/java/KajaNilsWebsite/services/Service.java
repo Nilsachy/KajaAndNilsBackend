@@ -119,14 +119,15 @@ public class Service {
         return restaurantRepository.findAll();
     }
 
-    public Restaurant addRestaurant(String name, Boolean visited) {
-        Restaurant restaurant = new Restaurant(name, visited);
+    public Restaurant addRestaurant(String name, String city, Boolean visited) {
+        Restaurant restaurant = new Restaurant(name, city, visited);
         return restaurantRepository.save(restaurant);
     }
 
-    public Restaurant editRestaurant(Integer id, String name, Boolean visited) {
+    public Restaurant editRestaurant(Integer id, String name, String city, Boolean visited) {
         Restaurant restaurant = getRestaurant(id);
         restaurant.setName(name);
+        restaurant.setCity(city);
         restaurant.setVisited(visited);
         return restaurantRepository.save(restaurant);
     }
