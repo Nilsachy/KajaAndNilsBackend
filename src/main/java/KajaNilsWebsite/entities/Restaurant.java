@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -15,14 +17,16 @@ public class Restaurant {
     private String name;
     private String city;
     private Boolean visited;
+    private LocalDateTime date;
 
     public Restaurant() {
     }
 
-    public Restaurant(String name, String city, Boolean visited) {
+    public Restaurant(String name, String city, Boolean visited, LocalDateTime date) {
         this.name = name;
         this.city = city;
         this.visited = visited;
+        this.date = date;
     }
 
     public Integer getId() {
@@ -45,13 +49,20 @@ public class Restaurant {
 
     public void setCity(String city) { this.city = city; }
 
-
     public Boolean getVisited() {
         return visited;
     }
 
     public void setVisited(Boolean visited) {
         this.visited = visited;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 
     @Override

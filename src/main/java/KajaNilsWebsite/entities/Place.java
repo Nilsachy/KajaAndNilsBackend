@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -14,13 +15,15 @@ public class Place {
     private Integer id;
     private String name;
     private Boolean visited;
+    private LocalDateTime date;
 
     public Place() {
     }
 
-    public Place(String name, Boolean visited) {
+    public Place(String name, Boolean visited, LocalDateTime date) {
         this.name = name;
         this.visited = visited;
+        this.date = date;
     }
 
     public Integer getId() {
@@ -45,6 +48,14 @@ public class Place {
 
     public void setVisited(Boolean visited) {
         this.visited = visited;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 
     @Override

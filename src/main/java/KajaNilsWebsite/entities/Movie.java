@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -14,12 +15,14 @@ public class Movie {
     private Integer id;
     private String title;
     private Boolean watched;
+    private LocalDateTime date;
 
     public Movie() {}
 
-    public Movie(String title, Boolean watched) {
+    public Movie(String title, Boolean watched, LocalDateTime date) {
         this.title = title;
         this.watched = watched;
+        this.date = date;
     }
 
     public Integer getId() {
@@ -44,6 +47,14 @@ public class Movie {
 
     public void setWatched(Boolean watched) {
         this.watched = watched;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 
     @Override

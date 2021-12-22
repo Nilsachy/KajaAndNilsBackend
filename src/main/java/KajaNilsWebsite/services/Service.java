@@ -1,16 +1,10 @@
 package KajaNilsWebsite.services;
 
-import KajaNilsWebsite.entities.Movie;
-import KajaNilsWebsite.entities.Place;
-import KajaNilsWebsite.entities.Restaurant;
-import KajaNilsWebsite.entities.Todo;
-import KajaNilsWebsite.repositories.MovieRepository;
-import KajaNilsWebsite.repositories.PlaceRepository;
-import KajaNilsWebsite.repositories.RestaurantRepository;
-import KajaNilsWebsite.repositories.TodoRepository;
+import KajaNilsWebsite.entities.*;
+import KajaNilsWebsite.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @org.springframework.stereotype.Service
@@ -38,8 +32,8 @@ public class Service {
         return todoRepository.findAll();
     }
 
-    public Todo addTodo(String title, Boolean done) {
-        Todo todo = new Todo(title, done);
+    public Todo addTodo(String title, Boolean done, LocalDateTime date) {
+        Todo todo = new Todo(title, done, date);
         return todoRepository.save(todo);
     }
 
@@ -65,8 +59,8 @@ public class Service {
         return movieRepository.findAll();
     }
 
-    public Movie addMovie(String title, Boolean watched) {
-        Movie movie = new Movie(title, watched);
+    public Movie addMovie(String title, Boolean watched, LocalDateTime date) {
+        Movie movie = new Movie(title, watched, date);
         return movieRepository.save(movie);
     }
 
@@ -92,8 +86,8 @@ public class Service {
         return placeRepository.findAll();
     }
 
-    public Place addPlace(String name, Boolean visited) {
-        Place place = new Place(name, visited);
+    public Place addPlace(String name, Boolean visited, LocalDateTime date) {
+        Place place = new Place(name, visited, date);
         return placeRepository.save(place);
     }
 
@@ -119,8 +113,8 @@ public class Service {
         return restaurantRepository.findAll();
     }
 
-    public Restaurant addRestaurant(String name, String city, Boolean visited) {
-        Restaurant restaurant = new Restaurant(name, city, visited);
+    public Restaurant addRestaurant(String name, String city, Boolean visited, LocalDateTime date) {
+        Restaurant restaurant = new Restaurant(name, city, visited, date);
         return restaurantRepository.save(restaurant);
     }
 

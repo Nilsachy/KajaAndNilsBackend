@@ -1,16 +1,15 @@
 package KajaNilsWebsite.controllers;
 
-import KajaNilsWebsite.entities.Movie;
-import KajaNilsWebsite.entities.Place;
-import KajaNilsWebsite.entities.Restaurant;
-import KajaNilsWebsite.entities.Todo;
+import KajaNilsWebsite.entities.*;
 import KajaNilsWebsite.services.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import responses.ResponseMessage;
-
+import java.time.LocalDateTime;
 import java.util.List;
+
 @RequestMapping(value = "/backend-kn")
 @org.springframework.stereotype.Controller
 public class Controller {
@@ -29,9 +28,9 @@ public class Controller {
     }
 
     @PostMapping("/todos/create")
-    public ResponseEntity<ResponseMessage> addTodo(@RequestParam("title") String title, @RequestParam("done") Boolean done) {
+    public ResponseEntity<ResponseMessage> addTodo(@RequestParam("title") String title, @RequestParam("done") Boolean done, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime date) {
         try {
-            service.addTodo(title, done);
+            service.addTodo(title, done, date);
             String message = "Successfully added todo: " + title;
             return ResponseEntity.ok().body(new ResponseMessage(message));
         } catch (Exception e) {
@@ -70,9 +69,9 @@ public class Controller {
     }
 
     @PostMapping("/movies/create")
-    public ResponseEntity<ResponseMessage> addMovie(@RequestParam("title") String title, @RequestParam("watched") Boolean watched) {
+    public ResponseEntity<ResponseMessage> addMovie(@RequestParam("title") String title, @RequestParam("watched") Boolean watched, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime date) {
         try {
-            service.addMovie(title, watched);
+            service.addMovie(title, watched, date);
             String message = "Successfully added movie: " + title;
             return ResponseEntity.ok().body(new ResponseMessage(message));
         } catch (Exception e) {
@@ -111,9 +110,9 @@ public class Controller {
     }
 
     @PostMapping("/places/create")
-    public ResponseEntity<ResponseMessage> addPlace(@RequestParam("name") String name, @RequestParam("visited") Boolean visited) {
+    public ResponseEntity<ResponseMessage> addPlace(@RequestParam("name") String name, @RequestParam("visited") Boolean visited, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime date) {
         try {
-            service.addPlace(name, visited);
+            service.addPlace(name, visited, date);
             String message = "Successfully added place: " + name;
             return ResponseEntity.ok().body(new ResponseMessage(message));
         } catch (Exception e) {
@@ -152,9 +151,9 @@ public class Controller {
     }
 
     @PostMapping("/restaurants/create")
-    public ResponseEntity<ResponseMessage> addRestaurant(@RequestParam("name") String name, @RequestParam("city") String city, @RequestParam("visited") Boolean visited) {
+    public ResponseEntity<ResponseMessage> addRestaurant(@RequestParam("name") String name, @RequestParam("city") String city, @RequestParam("visited") Boolean visited, @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime date) {
         try {
-            service.addRestaurant(name, city, visited);
+            service.addRestaurant(name, city, visited, date);
             String message = "Successfully added restaurant: " + name;
             return ResponseEntity.ok().body(new ResponseMessage(message));
         } catch (Exception e) {
@@ -191,5 +190,4 @@ public class Controller {
         String message = "The following error was thrown: " + e.getMessage();
         return ResponseEntity.badRequest().body(new ResponseMessage(message));
     }
-
 }

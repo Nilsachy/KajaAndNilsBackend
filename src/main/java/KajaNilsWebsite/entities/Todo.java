@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -14,12 +16,14 @@ public class Todo {
     private Integer id;
     private String title;
     private Boolean done;
+    private LocalDateTime date;
 
     public Todo() {}
 
-    public Todo(String title, Boolean done) {
+    public Todo(String title, Boolean done, LocalDateTime date) {
         this.title = title;
         this.done = done;
+        this.date = date;
     }
 
     public Integer getId() {
@@ -44,6 +48,14 @@ public class Todo {
 
     public void setDone(Boolean done) {
         this.done = done;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 
     @Override
